@@ -35,8 +35,16 @@ public class EventBusBuilder {
     boolean logSubscriberExceptions = true;
     boolean logNoSubscriberMessages = true;
     boolean sendSubscriberExceptionEvent = true;
+    /**
+     * 设为true或false似乎没有什么本质的区别,对EventBus的运作流程没有太大影响。并不是设为false时，才不会
+     * post事件。EventBus的相关post源码就体现出来，如果没有相关事件的订阅者，就不会真的post事件。可查阅
+     * EventBus#postSingleEvent方法。
+     * sendNoSubscriberEvent为true时，会发送{@link NoSubscriberEvent}事件。设为false,则不会。仅此而已。
+     * 目前只在EventBusBuilderTest#testDoNotSendNoSubscriberEvent()测试方法里看见将它设置为false。
+     */
     boolean sendNoSubscriberEvent = true;
     boolean throwSubscriberException;
+    //是否支持事件的继承。默认会true,则会遍历获取他们的所有父类、父接口。逐一发送对应的事件。
     boolean eventInheritance = true;
     boolean ignoreGeneratedIndex;
     boolean strictMethodVerification;
